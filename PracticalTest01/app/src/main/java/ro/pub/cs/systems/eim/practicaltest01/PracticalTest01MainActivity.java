@@ -6,6 +6,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import ro.pub.cs.systems.eim.practicaltest01.general.Constants;
+
 public class PracticalTest01MainActivity extends AppCompatActivity {
 
     private EditText leftEditText;
@@ -46,5 +48,43 @@ public class PracticalTest01MainActivity extends AppCompatActivity {
         pressMeButton.setOnClickListener(buttonClickListener);
         pressMeTooButton = (Button)findViewById(R.id.press_me_too_button);
         pressMeTooButton.setOnClickListener(buttonClickListener);
+
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(Constants.LEFT_COUNT)) {
+                leftEditText.setText(savedInstanceState.getString(Constants.LEFT_COUNT));
+            } else {
+                leftEditText.setText(String.valueOf(0));
+            }
+            if (savedInstanceState.containsKey(Constants.RIGHT_COUNT)) {
+                rightEditText.setText(savedInstanceState.getString(Constants.RIGHT_COUNT));
+            } else {
+                rightEditText.setText(String.valueOf(0));
+            }
+        } else {
+            leftEditText.setText(String.valueOf(0));
+            rightEditText.setText(String.valueOf(0));
+        }
+
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        super.onSaveInstanceState(savedInstanceState);
+        savedInstanceState.putString(Constants.LEFT_COUNT, leftEditText.getText().toString());
+        savedInstanceState.putString(Constants.RIGHT_COUNT, rightEditText.getText().toString());
+    }
+
+    @Override
+    public void onRestoreInstanceState(Bundle savedInstanceState) {
+        if (savedInstanceState.containsKey(Constants.LEFT_COUNT)) {
+            leftEditText.setText(savedInstanceState.getString(Constants.LEFT_COUNT));
+        } else {
+            leftEditText.setText(String.valueOf(0));
+        }
+        if (savedInstanceState.containsKey(Constants.RIGHT_COUNT)) {
+            rightEditText.setText(savedInstanceState.getString(Constants.RIGHT_COUNT));
+        } else {
+            rightEditText.setText(String.valueOf(0));
+        }
     }
 }
